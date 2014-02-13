@@ -4,8 +4,9 @@
         xmlns:models="clr-namespace:eZet.Eve.EveProfiteer.Models"
         xmlns:vm="clr-namespace:eZet.Eve.EveProfiteer.ViewModels"
         xmlns:views="clr-namespace:eZet.Eve.EveProfiteer.Views"
+        xmlns:cmd="clr-namespace:eZet.Eve.EveProfiteer.Commands"
         Title="Eve Profiteer" Height="588" Width="900">
-
+    
     <StackPanel>
         <Menu IsMainMenu="True">
             <MenuItem Header="_File"></MenuItem>
@@ -14,6 +15,7 @@
             <MenuItem Header="_Tools"></MenuItem>
             <MenuItem Header="_Help"/>
         </Menu>
+        
         <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="True" Margin="10">
             <TreeView Name="ItemsTreeView" VirtualizingPanel.IsVirtualizing="True" HorizontalAlignment="Left" VerticalAlignment="Stretch" ItemsSource="{Binding TreeRootNodes}" Width="200" DockPanel.Dock="Left">
                 <TreeView.Resources>
@@ -36,10 +38,10 @@
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label>Region: </Label>
                     <ComboBox Name="RegionSelector" Width="150" ItemsSource="{Binding Regions}" DisplayMemberPath="RegionName"
-                              SelectedValuePath="RegionId" SelectedValue="10000002">
+                              SelectedValuePath="RegionId" SelectedItem="{Binding SelectedRegion}">
                     </ComboBox>
                     <Label Content="Filter"/>
-                    <Button Name="AnalyzeButton">Analyze</Button>
+                    <Button Name="AnalyzeButton" Content="Analyze" Command="{Binding AnalyzeCommand}" CommandParameter="{Binding}"/>
                 </StackPanel>
             <DataGrid Name="MarketAnalyzerResult" ItemsSource="{Binding MarketAnalyzerResults}" IsReadOnly="True">
 

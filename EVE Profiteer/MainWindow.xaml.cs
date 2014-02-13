@@ -24,17 +24,14 @@ namespace eZet.Eve.EveProfiteer {
     /// </summary>
     public partial class MainWindow : Window {
 
-        public MarketAnalyzerViewModel ViewModel {
-            set {
-                DataContext = value;
-            }
-        }
+        private MarketAnalyzerViewModel vm;
 
         public MainWindow() {
             InitializeComponent();
-            DataContext = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService());
-
+            vm = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService());
+            DataContext = vm;
         }
+
 
     }
 
