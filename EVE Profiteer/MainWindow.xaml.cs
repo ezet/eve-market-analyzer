@@ -24,7 +24,7 @@ namespace eZet.Eve.EveProfiteer {
     /// </summary>
     public partial class MainWindow : Window {
 
-        public MainWindowViewModel ViewModel {
+        public MarketAnalyzerViewModel ViewModel {
             set {
                 DataContext = value;
             }
@@ -32,7 +32,7 @@ namespace eZet.Eve.EveProfiteer {
 
         public MainWindow() {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(new EveDbService(), new EveMarketDataService());
+            DataContext = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService());
         }
 
     }

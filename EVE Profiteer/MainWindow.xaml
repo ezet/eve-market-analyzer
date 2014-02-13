@@ -14,30 +14,29 @@
             <MenuItem Header="_Tools"></MenuItem>
             <MenuItem Header="_Help"/>
         </Menu>
-        <DockPanel>
-            
-        <TreeView Name="ItemsTreeView" HorizontalAlignment="Left" ItemsSource="{Binding TreeRootNodes}" Height="500" Width="200" DockPanel.Dock="Left">
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type models:MarketGroup}" ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="chk" Margin="2" Tag="{Binding}"></CheckBox>
-                        <TextBlock Text="{Binding MarketGroupName}"></TextBlock>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type models:Item}">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Name="chk" Margin="2" Tag="{Binding}"></CheckBox>
-                        <TextBlock Text="{Binding TypeName}"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </TreeView.Resources>
+        <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="True">
+            <TreeView Name="ItemsTreeView" VirtualizingPanel.IsVirtualizing="True" HorizontalAlignment="Left" VerticalAlignment="Stretch" ItemsSource="{Binding TreeRootNodes}" Width="200" DockPanel.Dock="Left">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type models:MarketGroup}" ItemsSource="{Binding Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsChecked}" Focusable="False"></CheckBox>
+                            <TextBlock Text="{Binding MarketGroupName}"></TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type models:Item}">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsChecked}" Focusable="False"></CheckBox>
+                            <TextBlock Text="{Binding TypeName}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </TreeView.Resources>
 
-        </TreeView>
+            </TreeView>
             <DataGrid Name="MarketAnalyzerResult" ItemsSource="{Binding MarketAnalyzerResults}" IsReadOnly="True">
- 
-                
-            </DataGrid>    
-        </DockPanel>
+
+
+            </DataGrid>
+        </StackPanel>
 
     </StackPanel>
 

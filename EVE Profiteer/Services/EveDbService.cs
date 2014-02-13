@@ -38,7 +38,7 @@ namespace eZet.Eve.EveProfiteer.Services {
         }
 
         public IQueryable<MarketGroup> GetRootMarketGroups() {
-            var query = from b in db.MarketGroups
+            var query = from b in db.MarketGroups.Include("SubGroups").Include("Items")
                         where b.ParentGroup == null
                         select b;
             return query;
