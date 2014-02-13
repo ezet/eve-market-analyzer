@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Models\MarketAnalyzerResult.cs" />
     <Compile Include="Services\EveDbService.cs" />
+    <Compile Include="Services\EveMarketDataService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MarketAnalyzerView.xaml.cs">
       <DependentUpon>MarketAnalyzerView.xaml</DependentUpon>
@@ -163,7 +164,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\EVE MarketData Api\EVE MarketData Api\EVE MarketData Api.csproj">
+      <Project>{04114d09-28bd-4f16-8368-64cdb21d916b}</Project>
+      <Name>EVE MarketData Api</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

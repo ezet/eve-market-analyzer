@@ -32,7 +32,7 @@ namespace eZet.Eve.EveProfiteer {
 
         public MainWindow() {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel(new EveDbService());
+            DataContext = new MainWindowViewModel(new EveDbService(), new EveMarketDataService());
         }
 
     }

@@ -4,7 +4,7 @@
         xmlns:models="clr-namespace:eZet.Eve.EveProfiteer.Models"
         xmlns:vm="clr-namespace:eZet.Eve.EveProfiteer.ViewModels"
         xmlns:views="clr-namespace:eZet.Eve.EveProfiteer.Views"
-        Title="MainWindow" Height="588" Width="900">
+        Title="Eve Profiteer" Height="588" Width="900">
 
     <StackPanel>
         <Menu IsMainMenu="True">
@@ -34,9 +34,7 @@
 
         </TreeView>
             <DataGrid Name="MarketAnalyzerResult" ItemsSource="{Binding MarketAnalyzerResults}" IsReadOnly="True">
-                <DataGrid.Resources>
-                    
-                </DataGrid.Resources>
+ 
                 
             </DataGrid>    
         </DockPanel>
