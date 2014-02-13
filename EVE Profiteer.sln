@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE Profiteer", "EVE Profiteer\EVE Profiteer.csproj", "{9BBB6EFF-1109-454B-9DB9-65DF186DAC13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE Profiteer", "EVE Profiteer\EVE Profiteer.csproj", "{156C0B94-0576-4B0B-ABB0-5809AE686476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVE MarketData Api", "..\EVE MarketData Api\EVE MarketData Api\EVE MarketData Api.csproj", "{04114D09-28BD-4F16-8368-64CDB21D916B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9BBB6EFF-1109-454B-9DB9-65DF186DAC13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BBB6EFF-1109-454B-9DB9-65DF186DAC13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BBB6EFF-1109-454B-9DB9-65DF186DAC13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BBB6EFF-1109-454B-9DB9-65DF186DAC13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156C0B94-0576-4B0B-ABB0-5809AE686476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156C0B94-0576-4B0B-ABB0-5809AE686476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156C0B94-0576-4B0B-ABB0-5809AE686476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156C0B94-0576-4B0B-ABB0-5809AE686476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04114D09-28BD-4F16-8368-64CDB21D916B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04114D09-28BD-4F16-8368-64CDB21D916B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04114D09-28BD-4F16-8368-64CDB21D916B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04114D09-28BD-4F16-8368-64CDB21D916B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
