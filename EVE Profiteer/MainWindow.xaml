@@ -14,7 +14,7 @@
             <MenuItem Header="_Tools"></MenuItem>
             <MenuItem Header="_Help"/>
         </Menu>
-        <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="True">
+        <StackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="True" Margin="10">
             <TreeView Name="ItemsTreeView" VirtualizingPanel.IsVirtualizing="True" HorizontalAlignment="Left" VerticalAlignment="Stretch" ItemsSource="{Binding TreeRootNodes}" Width="200" DockPanel.Dock="Left">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type models:MarketGroup}" ItemsSource="{Binding Children}">
@@ -32,10 +32,20 @@
                 </TreeView.Resources>
 
             </TreeView>
+            <StackPanel Margin="10 0 0 0">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label>Region: </Label>
+                    <ComboBox Name="RegionSelector" Width="150" ItemsSource="{Binding Regions}" DisplayMemberPath="RegionName"
+                              SelectedValuePath="RegionId" SelectedValue="10000002">
+                    </ComboBox>
+                    <Label Content="Filter"/>
+                    <Button Name="AnalyzeButton">Analyze</Button>
+                </StackPanel>
             <DataGrid Name="MarketAnalyzerResult" ItemsSource="{Binding MarketAnalyzerResults}" IsReadOnly="True">
 
 
             </DataGrid>
+            </StackPanel>
         </StackPanel>
 
     </StackPanel>

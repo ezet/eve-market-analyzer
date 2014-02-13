@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="eZet.Eve.EveProfiteer.EveDbModel.Item" Width="1.5" PointX="1.375" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="eZet.Eve.EveProfiteer.EveDbModel.invTypeinvMarketGroup" />
         <AssociationConnector Association="eZet.Eve.EveProfiteer.EveDbModel.MarketGroupMarketGroup" />
+        <EntityTypeShape EntityType="eZet.Eve.EveProfiteer.EveDbModel.Region" Width="1.5" PointX="6.75" PointY="1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

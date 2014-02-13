@@ -27,5 +27,6 @@ namespace eZet.Eve.EveProfiteer.Models
     
         public virtual DbSet<MarketGroup> MarketGroups { get; set; }
         public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<Region> Regions { get; set; }
     }
 }

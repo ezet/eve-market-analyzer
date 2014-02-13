@@ -66,6 +66,9 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Models\MarketAnalyzerResult.cs" />
+    <Compile Include="Models\Region.cs">
+      <DependentUpon>EveDbModelContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\EveDbService.cs" />
     <Compile Include="Services\EveMarketDataService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

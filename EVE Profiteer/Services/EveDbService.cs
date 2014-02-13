@@ -43,5 +43,13 @@ namespace eZet.Eve.EveProfiteer.Services {
                         select b;
             return query;
         }
+
+        public IQueryable<Region> GetRegions() {
+            var query = from row in db.Regions
+                        where row.RegionId < 11000001
+                        orderby row.RegionName
+                        select row;
+            return query;
+        }
     }
 }

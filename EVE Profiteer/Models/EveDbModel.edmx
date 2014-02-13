@@ -34,9 +34,28 @@
           <Property Name="marketGroupID" Type="int" />
           <Property Name="chanceOfDuplicating" Type="float" />
         </EntityType>
+        <EntityType Name="mapRegions">
+          <Key>
+            <PropertyRef Name="regionID" />
+          </Key>
+          <Property Name="regionID" Type="int" Nullable="false" />
+          <Property Name="regionName" Type="nvarchar" MaxLength="100" />
+          <Property Name="x" Type="float" />
+          <Property Name="y" Type="float" />
+          <Property Name="z" Type="float" />
+          <Property Name="xMin" Type="float" />
+          <Property Name="xMax" Type="float" />
+          <Property Name="yMin" Type="float" />
+          <Property Name="yMax" Type="float" />
+          <Property Name="zMin" Type="float" />
+          <Property Name="zMax" Type="float" />
+          <Property Name="factionID" Type="int" />
+          <Property Name="radius" Type="float" />
+        </EntityType>
         <EntityContainer Name="EveDbModelStoreContainer">
           <EntitySet Name="invMarketGroups" EntityType="Self.invMarketGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="invTypes" EntityType="Self.invTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mapRegions" EntityType="Self.mapRegions" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -86,6 +105,7 @@
             <End Role="MarketGroupParent" EntitySet="MarketGroups" />
             <End Role="MarketGroupChild" EntitySet="MarketGroups" />
           </AssociationSet>
+          <EntitySet Name="Regions" EntityType="eZet.Eve.EveProfiteer.EveDbModel.Region" />
         </EntityContainer>
         <Association Name="invTypeinvMarketGroup">
           <End Type="eZet.Eve.EveProfiteer.EveDbModel.Item" Role="invType" Multiplicity="*" />
@@ -111,6 +131,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionId" />
+          </Key>
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <Property Name="RegionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="X" Type="Double" />
+          <Property Name="Y" Type="Double" />
+          <Property Name="Z" Type="Double" />
+          <Property Name="XMin" Type="Double" />
+          <Property Name="XMax" Type="Double" />
+          <Property Name="YMin" Type="Double" />
+          <Property Name="YMax" Type="Double" />
+          <Property Name="ZMin" Type="Double" />
+          <Property Name="ZMax" Type="Double" />
+          <Property Name="FactionId" Type="Int32" />
+          <Property Name="Radius" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -145,6 +183,25 @@
                 <ScalarProperty Name="TypeName" ColumnName="typeName" />
                 <ScalarProperty Name="GroupId" ColumnName="groupID" />
                 <ScalarProperty Name="TypeId" ColumnName="typeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="eZet.Eve.EveProfiteer.EveDbModel.Region">
+              <MappingFragment StoreEntitySet="mapRegions">
+                <ScalarProperty Name="Radius" ColumnName="radius" />
+                <ScalarProperty Name="FactionId" ColumnName="factionID" />
+                <ScalarProperty Name="ZMax" ColumnName="zMax" />
+                <ScalarProperty Name="ZMin" ColumnName="zMin" />
+                <ScalarProperty Name="YMax" ColumnName="yMax" />
+                <ScalarProperty Name="YMin" ColumnName="yMin" />
+                <ScalarProperty Name="XMax" ColumnName="xMax" />
+                <ScalarProperty Name="XMin" ColumnName="xMin" />
+                <ScalarProperty Name="Z" ColumnName="z" />
+                <ScalarProperty Name="Y" ColumnName="y" />
+                <ScalarProperty Name="X" ColumnName="x" />
+                <ScalarProperty Name="RegionName" ColumnName="regionName" />
+                <ScalarProperty Name="RegionId" ColumnName="regionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
