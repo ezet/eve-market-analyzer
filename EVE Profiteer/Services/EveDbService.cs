@@ -1,6 +1,7 @@
 ﻿using eZet.Eve.EveProfiteer.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ namespace eZet.Eve.EveProfiteer.Services {
     public class EveDbService {
 
         private EveDbContext db = new EveDbContext();
+
+        public void SetLazyLoad(bool val) {
+            db.Configuration.LazyLoadingEnabled = val;
+        }
 
         public Item GetItem(long id) {
             var query = from item in db.Items
@@ -34,14 +39,21 @@ namespace eZet.Eve.EveProfiteer.Services {
         public ICollection<MarketGroup> GetMarketGroups() {
             var query = from g in db.MarketGroups
                         select g;
+            
             return query.ToList();
         }
 
         public IQueryable<MarketGroup> GetRootMarketGroups() {
-            var query = from b in db.MarketGroups.Include("SubGroups").Include("Items")
+            var q = from b in db.MarketGroups.Include("SubGroups").Include("SubGroups.Items").Include("SubGroups.SubGroups")
+                        .Include("SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.Items")
+                        .Include("SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.Items")
+                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.SubGroups.Items")
+                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.Items")
+                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.Items")
                         where b.ParentGroup == null
                         select b;
-            return query;
+                db.Configuration.LazyLoadingEnabled = true;
+                return q;
         }
 
         public IQueryable<Region> GetRegions() {

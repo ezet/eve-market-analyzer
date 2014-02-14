@@ -64,7 +64,9 @@
     </ApplicationDefinition>
     <Compile Include="Commands\AnalyzeCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Models\Extensions\MarketGroup.cs">
+    <Compile Include="Models\Extensions\Item.cs" />
+    <Compile Include="Models\Extensions\MarketGroup.cs" />
+    <Compile Include="Models\TreeNode.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Models\MarketAnalyzerResult.cs" />

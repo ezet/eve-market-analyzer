@@ -28,6 +28,6 @@ namespace eZet.Eve.EveProfiteer.Models
         public Nullable<int> MarketGroupId { get; set; }
         public Nullable<double> chanceOfDuplicating { get; set; }
     
-        public virtual MarketGroup MarketGroup { get; set; }
+        public virtual MarketGroup ParentGroup { get; set; }
     }
 }

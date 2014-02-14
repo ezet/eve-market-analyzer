@@ -92,7 +92,7 @@
           <Property Name="Published" Type="Boolean" />
           <Property Name="MarketGroupId" Type="Int32" Nullable="true" />
           <Property Name="chanceOfDuplicating" Type="Double" />
-          <NavigationProperty Name="MarketGroup" Relationship="eZet.Eve.EveProfiteer.EveDbModel.invTypeinvMarketGroup" FromRole="invType" ToRole="invMarketGroup" />
+          <NavigationProperty Name="ParentGroup" Relationship="eZet.Eve.EveProfiteer.EveDbModel.invTypeinvMarketGroup" FromRole="invType" ToRole="invMarketGroup" />
         </EntityType>
         <EntityContainer Name="EveDbContext" annotation:LazyLoadingEnabled="true" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
           <EntitySet Name="MarketGroups" EntityType="eZet.Eve.EveProfiteer.EveDbModel.MarketGroup" />

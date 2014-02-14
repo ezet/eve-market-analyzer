@@ -13,7 +13,7 @@ namespace eZet.Eve.EveProfiteer.Services {
 
         private MarketData api = new MarketData(Format.Xml);
 
-        public IList<MarketAnalyzerResult> GetItemHistory() {
+        public ICollection<MarketAnalyzerResult> GetItemHistory() {
             var options = new MarketDataOptions();
             options.Items.Add(34);
             options.Regions.Add(10000002);
@@ -26,7 +26,7 @@ namespace eZet.Eve.EveProfiteer.Services {
             return list;
         }
 
-        public IList<MarketAnalyzerResult> GetItemHistory(Region region, List<Item> items) {
+        public ICollection<MarketAnalyzerResult> GetItemHistory(Region region, ICollection<Item> items) {
             var options = new MarketDataOptions();
             options.Regions.Add(region.RegionId);
             foreach (var item in items) {
