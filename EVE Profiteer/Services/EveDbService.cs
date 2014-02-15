@@ -22,10 +22,10 @@ namespace eZet.Eve.EveProfiteer.Services {
             return query.First();
         }
 
-        public List<Item> GetItems() {
+        public IQueryable<Item> GetItems() {
             var query = from item in db.Items
                         select item;
-            return query.ToList();
+            return query;
         }
 
         public MarketGroup GetMarketGroup(long id) {
@@ -36,24 +36,10 @@ namespace eZet.Eve.EveProfiteer.Services {
 
         }
 
-        public ICollection<MarketGroup> GetMarketGroups() {
+        public IQueryable<MarketGroup> GetMarketGroups() {
             var query = from g in db.MarketGroups
                         select g;
-            
-            return query.ToList();
-        }
-
-        public IQueryable<MarketGroup> GetRootMarketGroups() {
-            var q = from b in db.MarketGroups.Include("SubGroups").Include("SubGroups.Items").Include("SubGroups.SubGroups")
-                        .Include("SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.Items")
-                        .Include("SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.Items")
-                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.SubGroups.Items")
-                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.SubGroups").Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.Items")
-                        .Include("SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.SubGroups.Items")
-                        where b.ParentGroup == null
-                        select b;
-                db.Configuration.LazyLoadingEnabled = true;
-                return q;
+            return query;
         }
 
         public IQueryable<Region> GetRegions() {

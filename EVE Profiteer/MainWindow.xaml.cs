@@ -28,8 +28,13 @@ namespace eZet.Eve.EveProfiteer {
 
         public MainWindow() {
             InitializeComponent();
-            vm = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService());
+            vm = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService(), new DialogService());
             DataContext = vm;
+            Splitter.DragDelta += SplitterNameDragDelta;
+        }
+
+        private void SplitterNameDragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e) {
+            MainGrid.ColumnDefinitions[0].Width = new GridLength(MainGrid.ColumnDefinitions[0].ActualWidth + e.HorizontalChange);
         }
 
 

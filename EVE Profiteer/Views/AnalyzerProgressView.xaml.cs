@@ -1,7 +1,5 @@
-﻿using eZet.Eve.EveProfiteer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +14,10 @@ using System.Windows.Shapes;
 
 namespace eZet.Eve.EveProfiteer.Views {
     /// <summary>
-    /// Interaction logic for MarketAnalyzerView
+    /// Interaction logic for AnalyzerProgress.xaml
     /// </summary>
-    public partial class MarketAnalyzerView {
-        public MarketAnalyzerView() {
+    public partial class AnalyzerProgressView : Window {
+        public AnalyzerProgressView() {
             InitializeComponent();
         }
     }

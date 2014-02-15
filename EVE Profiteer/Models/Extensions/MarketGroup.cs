@@ -9,7 +9,7 @@ namespace eZet.Eve.EveProfiteer.Models {
     public partial class MarketGroup : TreeNode {
 
         [NotMapped]
-        private ICollection<TreeNode> _children;
+        private ICollection<TreeNode> _children = new List<TreeNode>();
 
         [NotMapped]
         public override TreeNode Parent {
@@ -24,19 +24,7 @@ namespace eZet.Eve.EveProfiteer.Models {
         [NotMapped]
         public override ICollection<TreeNode> Children {
             get {
-                if (_children == null)
-                    LoadChildren();
                 return _children;
-            }
-            set {
-                _children = value;
-            }
-        }
-
-        public void LoadChildren() {
-            _children = new List<TreeNode>(SubGroups);
-            foreach (var item in Items) {
-                _children.Add(item);
             }
         }
     }

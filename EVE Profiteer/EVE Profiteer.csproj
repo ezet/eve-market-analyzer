@@ -13,6 +13,25 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Lars Kristian\Desktop\</PublishUrl>
+    <Install>false</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://localhost:8080/</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +51,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>7E6CAF9AB6626A1819551A4D1259BCF616BB2310</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>EVE Profiteer_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -66,16 +97,23 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Models\Extensions\Item.cs" />
     <Compile Include="Models\Extensions\MarketGroup.cs" />
+    <Compile Include="Models\MarketAnalyzerResult.cs" />
     <Compile Include="Models\TreeNode.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Models\MarketAnalyzerResult.cs" />
+    <Compile Include="Models\MarketAnalyzer.cs" />
     <Compile Include="Models\Region.cs">
       <DependentUpon>EveDbModelContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\EveDbService.cs" />
     <Compile Include="Services\EveMarketDataService.cs" />
-    <Compile Include="ViewModels\MarketAnalyzerViewModel.cs" />
+    <Compile Include="Services\OpenDialogService.cs" />
+    <Compile Include="ViewModels\AnalyzerProgressViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\AnalyzerProgressView.xaml.cs">
+      <DependentUpon>AnalyzerProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MarketAnalyzerViewModel.cs" />
     <Compile Include="Views\MarketAnalyzerView.xaml.cs">
       <DependentUpon>MarketAnalyzerView.xaml</DependentUpon>
     </Compile>
@@ -105,6 +143,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AnalyzerProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MarketAnalyzerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +182,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EveDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="EVE Profiteer_TemporaryKey.pfx" />
     <None Include="Models\EveDbModel.edmx.diagram">
       <DependentUpon>EveDbModel.edmx</DependentUpon>
     </None>
@@ -177,6 +220,24 @@
       <Name>EVE MarketData Api</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

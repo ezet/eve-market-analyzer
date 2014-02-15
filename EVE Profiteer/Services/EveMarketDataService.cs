@@ -13,31 +13,30 @@ namespace eZet.Eve.EveProfiteer.Services {
 
         private MarketData api = new MarketData(Format.Xml);
 
-        public ICollection<MarketAnalyzerResult> GetItemHistory() {
-            var options = new MarketDataOptions();
-            options.Items.Add(34);
-            options.Regions.Add(10000002);
-            var response = api.GetItemHistory(options);
-            var list = new List<MarketAnalyzerResult>();
+        //public MarketAnalyzer GetItemHistory() {
+        //    var options = new MarketDataOptions();
+        //    options.Items.Add(34);
+        //    options.Items.Add(456);
+        //    options.Regions.Add(10000002);
+        //    var response = api.GetItemHistory(options);
+        //    return new MarketAnalyzer(nresponse);
+        //}
 
-            foreach (var row in response.Result.RowSet.Row) {
-                list.Add(new MarketAnalyzerResult(row));
-            }
-            return list;
-        }
-
-        public ICollection<MarketAnalyzerResult> GetItemHistory(Region region, ICollection<Item> items) {
+        public MarketAnalyzer GetMarketAnalyzer(Region region, ICollection<Item> items, IProgress<int> progress) {
+            progress.Report(0);
             var options = new MarketDataOptions();
             options.Regions.Add(region.RegionId);
             foreach (var item in items) {
                 options.Items.Add(item.TypeId);
             }
+            progress.Report(25);
             var response = api.GetItemHistory(options);
-            var list = new List<MarketAnalyzerResult>();
-            foreach (var row in response.Result.RowSet.Row) {
-                list.Add(new MarketAnalyzerResult(row));
-            }
-            return list;
+            progress.Report(50);
+            var result = new MarketAnalyzer(region, items, response);
+            progress.Report(75);
+            result.Calculate();
+            progress.Report(100);
+            return result;
         }
     }
 }

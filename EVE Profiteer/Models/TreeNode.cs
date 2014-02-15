@@ -27,22 +27,22 @@ namespace eZet.Eve.EveProfiteer.Models {
             }
         }
 
-        internal void setIsChecked(bool? value, bool updateChildren, bool updateParent) {
+        internal void setIsChecked(bool? value, bool updChildren, bool updParent) {
             if (value == _isChecked)
                 return;
 
             _isChecked = value;
 
-            if (updateChildren && _isChecked.HasValue && Children != null)
-                UpdateChildren(value);
+            if (updChildren && _isChecked.HasValue && Children != null)
+                updateChildren(value);
 
-            if (updateParent && Parent != null)
-                UpdateParent();
+            if (updParent && Parent != null)
+                updateParent();
 
-            OnPropertyChanged("IsChecked");
+            onPropertyChanged("IsChecked");
         }
 
-        public void UpdateParent() {
+        private void updateParent() {
             bool? state = Parent.Children.First().IsChecked;
             foreach (var child in Parent.Children) {
                 if (state != child.IsChecked) {
@@ -53,13 +53,13 @@ namespace eZet.Eve.EveProfiteer.Models {
             Parent.setIsChecked(state, false, true);
         }
 
-        public void UpdateChildren(bool? value) {
+        private void updateChildren(bool? value) {
             foreach (var child in Children) {
                 child.setIsChecked(value, true, false);
             }
         }
 
-        public void OnPropertyChanged(string name) {
+        private void onPropertyChanged(string name) {
             var handler = PropertyChanged;
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(name));
