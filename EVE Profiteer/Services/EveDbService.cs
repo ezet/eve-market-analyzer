@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace eZet.Eve.EveProfiteer.Services {
-    public class EveDbService {
+    public class EveDataService {
 
         private EveDbContext db = new EveDbContext();
 

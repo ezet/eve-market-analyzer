@@ -9,83 +9,98 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using eZet.Eve.EveProfiteer.Views;
+using eZet.Eve.EveProfiteer.Entities;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace eZet.Eve.EveProfiteer.ViewModels {
     public class MarketAnalyzerViewModel : ViewModel {
+        private EveDataService dataService { get; set; }
 
-        private EveDbService dataService { get; set; }
-
-        private EveMarketDataService marketService { get; set; }
+        private EveMarketService marketService { get; set; }
 
         private DialogService dialogService { get; set; }
+
+        public ICommand AnalyzeCommand { get; private set; }
 
         public Region SelectedRegion { get; set; }
 
         public ICollection<Item> SelectedItems { get; private set; }
 
         public ICollection<MarketGroup> TreeRootNodes { get; private set; }
-
-        private List<MarketAnalyzerResult> _marketAnalyzerResults;
-
-        public List<MarketAnalyzerResult> MarketAnalyzerResults {
-            get {
-                return _marketAnalyzerResults;
-            }
-            private set {
-                _marketAnalyzerResults = value;
-                onPropertyChanged("MarketAnalyzerResults");
-            }
-        }
-
-
         public ICollection<Region> Regions { get; private set; }
 
-        public ICommand AnalyzeCommand { get; private set; }
+        private ICollectionView _marketAnalyzerResults;
+
+        public ICollectionView MarketAnalyzerResults {
+            get { return _marketAnalyzerResults; }
+            private set {
+                _marketAnalyzerResults = value;
+                _marketAnalyzerResults.Filter = filterResults; onPropertyChanged("MarketAnalyzerResults");
+            }
+        }
 
         private int _analyzeProgress;
 
         public int AnalyzeProgress {
-            get {
-                return _analyzeProgress;
-            }
-            private set {
-                _analyzeProgress = value; onPropertyChanged("AnalyzeProgress");
-            }
+            get { return _analyzeProgress; }
+            private set { _analyzeProgress = value; onPropertyChanged("AnalyzeProgress"); }
         }
 
         private int _dayLimit = 10;
 
         public int DayLimit {
-            get {
-                return _dayLimit;
-            }
-            private set {
-                _dayLimit = value;
-                onPropertyChanged("DayLimit");
-            }
+            get { return _dayLimit; }
+            private set { _dayLimit = value; onPropertyChanged("DayLimit"); }
         }
 
-        private AnalyzerProgressView AnalyzerProgressDialog { get; set; }
+        private bool _profitFilterCheckBox;
 
-        public MarketAnalyzerViewModel(EveDbService dataService, EveMarketDataService marketService, DialogService dialogService) {
+        public bool ProfitFilterCheckBox {
+            get { return _profitFilterCheckBox; }
+            set { _profitFilterCheckBox = value; onPropertyChanged("ProfitFilterCheckBox"); }
+        }
+
+        private decimal _profitFilterValue;
+
+        public decimal ProfitFilterValue {
+            get { return _profitFilterValue; }
+            set { _profitFilterValue = value; onPropertyChanged("ProfitFilterValue"); }
+        }
+
+        public MarketAnalyzerViewModel(EveDataService dataService, EveMarketService marketService, DialogService dialogService) {
+            CollectionViewSource.GetDefaultView(MarketAnalyzerResults);
             this.dataService = dataService;
             this.marketService = marketService;
             this.dialogService = dialogService;
+            PropertyChanged += gridFilter_PropertyChanged;
             SelectedItems = new List<Item>();
             AnalyzeCommand = new RelayCommand<MarketAnalyzerViewModel>(AnalyzeAction, parameter => parameter != null && parameter.SelectedRegion != null && parameter.SelectedItems.Count != 0);
             TreeRootNodes = buildTree();
             Regions = dataService.GetRegions().ToList();
         }
 
+        private bool filterResults(object obj) {
+            var item = obj as MarketAnalyzerResult;
+            var filter = true;
+            if (ProfitFilterCheckBox) {
+                filter = item.DailyProfit > ProfitFilterValue;
+            }
+            return filter;
+
+        }
+
         public void AnalyzeAction(MarketAnalyzerViewModel vm) {
             var cts = new CancellationTokenSource();
-            var progressVm = new AnalyzerProgressViewModel();
+            var progressVm = new AnalyzerProgressViewModel(cts);
             var progress = progressVm.GetProgressReporter();
-            Task.Factory.StartNew<MarketAnalyzer>(() => getResult(progress), cts.Token).ContinueWith(task => MarketAnalyzerResults = task.Result.Items.Values.ToList());
+            Task.Factory.StartNew<MarketAnalyzer>(() => getResult(progress), cts.Token)
+                .ContinueWith(task => { MarketAnalyzerResults = new ListCollectionView(task.Result.Items.Values.ToList()); dialogService.CloseDialog(progressVm); }, cts.Token);
             dialogService.ShowDialog(progressVm);
         }
 
-        private MarketAnalyzer getResult(IProgress<int> progress) {
+        private MarketAnalyzer getResult(IProgress<ProgressType> progress) {
             return marketService.GetMarketAnalyzer(SelectedRegion, SelectedItems, progress);
         }
 
@@ -115,6 +130,12 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
             }
             dataService.SetLazyLoad(true);
             return rootList;
+        }
+
+        private void gridFilter_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            var vm = sender as MarketAnalyzerViewModel;
+            if (vm.MarketAnalyzerResults != null && (e.PropertyName == "ProfitFilterValue" || e.PropertyName == "ProfitFilterCheckBox"))
+                vm.MarketAnalyzerResults.Refresh();
         }
 
         private void treeViewCheckBox_PropertyChanged(object sender, PropertyChangedEventArgs e) {

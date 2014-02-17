@@ -1,17 +1,14 @@
-﻿using eZet.Eve.EveProfiteer.Models;
+﻿using eZet.Eve.EveProfiteer.Entities;
+using eZet.Eve.EveProfiteer.Models;
 using eZet.Eve.MarketDataApi;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eZet.Eve.EveProfiteer.Services {
 
-    public class EveMarketDataService {
+    public class EveMarketService {
 
-        private MarketData api = new MarketData(Format.Xml);
+        private readonly MarketData api = new MarketData(Format.Xml);
 
         //public MarketAnalyzer GetItemHistory() {
         //    var options = new MarketDataOptions();
@@ -22,20 +19,20 @@ namespace eZet.Eve.EveProfiteer.Services {
         //    return new MarketAnalyzer(nresponse);
         //}
 
-        public MarketAnalyzer GetMarketAnalyzer(Region region, ICollection<Item> items, IProgress<int> progress) {
-            progress.Report(0);
+        public MarketAnalyzer GetMarketAnalyzer(Region region, ICollection<Item> items, IProgress<ProgressType> progress) {
+            progress.Report(new ProgressType(0, "Configuring query..."));
             var options = new MarketDataOptions();
             options.Regions.Add(region.RegionId);
             foreach (var item in items) {
                 options.Items.Add(item.TypeId);
             }
-            progress.Report(25);
+            progress.Report(new ProgressType(25, "Fetching history data..."));
             var response = api.GetItemHistory(options);
-            progress.Report(50);
+            progress.Report(new ProgressType(50, "Initializing analysis..."));
             var result = new MarketAnalyzer(region, items, response);
-            progress.Report(75);
+            progress.Report(new ProgressType(75, "Analyzing..."));
             result.Calculate();
-            progress.Report(100);
+            progress.Report(new ProgressType(100, "Finished."));
             return result;
         }
     }

@@ -1,22 +1,6 @@
-﻿using eZet.Eve.EveProfiteer.Models;
-using eZet.Eve.EveProfiteer.Services;
+﻿using eZet.Eve.EveProfiteer.Services;
 using eZet.Eve.EveProfiteer.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace eZet.Eve.EveProfiteer {
     /// <summary>
@@ -28,7 +12,7 @@ namespace eZet.Eve.EveProfiteer {
 
         public MainWindow() {
             InitializeComponent();
-            vm = new MarketAnalyzerViewModel(new EveDbService(), new EveMarketDataService(), new DialogService());
+            vm = new MarketAnalyzerViewModel(new EveDataService(), new EveMarketService(), new DialogService());
             DataContext = vm;
             Splitter.DragDelta += SplitterNameDragDelta;
         }
@@ -37,8 +21,13 @@ namespace eZet.Eve.EveProfiteer {
             MainGrid.ColumnDefinitions[0].Width = new GridLength(MainGrid.ColumnDefinitions[0].ActualWidth + e.HorizontalChange);
         }
 
+        private void MarketAnalyzerResult_Loaded(object sender, RoutedEventArgs e) {
 
+        }
 
+        private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e) {
+
+        }
     }
 
 }

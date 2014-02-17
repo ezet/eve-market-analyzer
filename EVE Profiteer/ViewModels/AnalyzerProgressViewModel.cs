@@ -1,26 +1,49 @@
-﻿using System;
+﻿using eZet.Eve.EveProfiteer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace eZet.Eve.EveProfiteer.ViewModels {
     public class AnalyzerProgressViewModel : ViewModel {
 
-        private int _progress;
+        public CancellationTokenSource CancelSource { get; private set; }
 
-        public int Progress {
+        private string _status;
+
+        public string Status {
+            get { return _status; }
+            set { _status = value; onPropertyChanged("Status"); }
+        }
+
+        private int _percent;
+
+        public int Percent {
+            get { return _percent; }
+            set { _percent = value; onPropertyChanged("Percent"); }
+        }
+
+        private ProgressType _progress;
+
+        public ProgressType Progress {
             get {
                 return _progress;
             }
             set {
                 _progress = value;
-                onPropertyChanged("Progress");
+                Percent = value.Percent;
+                Status += value.Status + "\n";
             }
         }
 
-        public IProgress<int> GetProgressReporter() {
-            return new Progress<int>(t => Progress = t);
+        public AnalyzerProgressViewModel(CancellationTokenSource source) {
+            CancelSource = source;
+        }
+
+        public IProgress<ProgressType> GetProgressReporter() {
+            return new Progress<ProgressType>(t => Progress = t);
         }
 
     }
