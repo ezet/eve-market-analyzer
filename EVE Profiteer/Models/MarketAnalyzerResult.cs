@@ -1,4 +1,5 @@
-﻿using eZet.Eve.MarketDataApi.Dto.Xml;
+﻿using System.Windows.Media.Animation;
+using eZet.Eve.MarketDataApi.Dto.Xml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace eZet.Eve.EveProfiteer.Models {
 
         private const double VolumeWeight = 0.2;
         private const double MarginWeight = 0.2;
-        private const double profitWeight = 1 - VolumeWeight - MarginWeight;
+        private const double ProfitWeight = 1 - VolumeWeight - MarginWeight;
         private const int VolumeCutoff = 10;
         private const double MarginCutoff = 0.4;
         private const double TargetRating = 1000;
@@ -72,7 +73,7 @@ namespace eZet.Eve.EveProfiteer.Models {
             var profitRating = (double)DailyProfit / 50000000 * TargetRating; // 50M 
 
 
-            TotalRating = (volRating*VolumeWeight) + (marginRating*MarginWeight) + (profitRating*profitWeight);
+            TotalRating = (volRating*VolumeWeight) * (marginRating*MarginWeight) * (profitRating*ProfitWeight) * TargetRating / (200 * 200 * 600);
         }
 
 

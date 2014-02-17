@@ -37,6 +37,8 @@
                     <Label>Profit:</Label>
                     <CheckBox IsChecked="{Binding ProfitFilterCheckBox}" Width="10" Height="10" Focusable="False"/>
                     <xctk:DecimalUpDown Value="{Binding ProfitFilterValue}" FormatString="N2" Increment="10000" Width="100"></xctk:DecimalUpDown>
+                    <Label>Search:</Label>
+                    <TextBox Text="{Binding SearchFilter, UpdateSourceTrigger=PropertyChanged}" Width="150"></TextBox>
                 </ToolBar>
 
             </ToolBarTray>

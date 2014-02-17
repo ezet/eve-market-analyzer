@@ -55,6 +55,12 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
             private set { _dayLimit = value; onPropertyChanged("DayLimit"); }
         }
 
+        private string _searchFilter;
+        public string SearchFilter {
+            get { return _searchFilter; }
+            set { _searchFilter = value; onPropertyChanged("SearchFilter"); }
+        }
+
         private bool _profitFilterCheckBox = true;
 
         public bool ProfitFilterCheckBox {
@@ -83,11 +89,13 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
 
         private bool filterResults(object obj) {
             var item = obj as MarketAnalyzerResult;
-            var filter = true;
-            if (ProfitFilterCheckBox) {
-                filter = item.DailyProfit > ProfitFilterValue;
-            }
-            return filter;
+            if (item == null)
+                return false;
+            if (ProfitFilterCheckBox && item.DailyProfit < ProfitFilterValue)
+                return false;
+            if (!string.IsNullOrWhiteSpace(SearchFilter) && !item.ItemName.ToLower().Contains(SearchFilter.ToLower()))
+                return false;
+            return true;
 
         }
 
@@ -134,7 +142,7 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
 
         private void gridFilter_PropertyChanged(object sender, PropertyChangedEventArgs e) {
             var vm = sender as MarketAnalyzerViewModel;
-            if (vm.MarketAnalyzerResults != null && (e.PropertyName == "ProfitFilterValue" || e.PropertyName == "ProfitFilterCheckBox"))
+            if (vm.MarketAnalyzerResults != null && (e.PropertyName == "ProfitFilterValue" || e.PropertyName == "ProfitFilterCheckBox" || e.PropertyName == "SearchFilter"))
                 vm.MarketAnalyzerResults.Refresh();
         }
 
