@@ -76,6 +76,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding ItemName}"/>
                             <DataGridTextColumn Header="Region" Binding="{Binding RegionName}"/>
+                            <DataGridTextColumn Header="Profit Rating" Binding="{Binding TotalRating, StringFormat=N0}"/>
                             <DataGridTextColumn Header="Volume"  Binding="{Binding AvgVolume, StringFormat=N2}"/>
                             <DataGridTextColumn Header="Buy Price" Binding="{Binding AvgBuyPrice, StringFormat=N2}"/>
                             <DataGridTextColumn Header="Sell Price" Binding="{Binding AvgSellPrice, StringFormat=N2}"/>

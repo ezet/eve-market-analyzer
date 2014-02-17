@@ -55,14 +55,14 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
             private set { _dayLimit = value; onPropertyChanged("DayLimit"); }
         }
 
-        private bool _profitFilterCheckBox;
+        private bool _profitFilterCheckBox = true;
 
         public bool ProfitFilterCheckBox {
             get { return _profitFilterCheckBox; }
             set { _profitFilterCheckBox = value; onPropertyChanged("ProfitFilterCheckBox"); }
         }
 
-        private decimal _profitFilterValue;
+        private decimal _profitFilterValue = 5000000;
 
         public decimal ProfitFilterValue {
             get { return _profitFilterValue; }
@@ -150,7 +150,5 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
                 }
             }
         }
-
-
     }
 }
