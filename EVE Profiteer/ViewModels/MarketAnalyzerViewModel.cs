@@ -8,11 +8,9 @@ using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-using eZet.Eve.EveProfiteer.Views;
 using eZet.Eve.EveProfiteer.Entities;
-using System.Collections.ObjectModel;
 using System.Windows.Data;
-using System.Windows.Threading;
+using eZet.Eve.EveProfiteer.Views;
 
 namespace eZet.Eve.EveProfiteer.ViewModels {
     public class MarketAnalyzerViewModel : ViewModel {
@@ -23,6 +21,8 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
         private DialogService dialogService { get; set; }
 
         public ICommand AnalyzeCommand { get; private set; }
+
+        public ICommand ScannerLinkCommand { get; private set; }
 
         public Region SelectedRegion { get; set; }
 
@@ -83,8 +83,10 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
             PropertyChanged += gridFilter_PropertyChanged;
             SelectedItems = new List<Item>();
             AnalyzeCommand = new RelayCommand<MarketAnalyzerViewModel>(AnalyzeAction, parameter => parameter != null && parameter.SelectedRegion != null && parameter.SelectedItems.Count != 0);
+            ScannerLinkCommand = new RelayCommand<MarketAnalyzerViewModel>(ScannerLinkAction, f => f != null && f.MarketAnalyzerResults != null);
             TreeRootNodes = buildTree();
             Regions = dataService.GetRegions().ToList();
+            SelectedRegion = Regions.Single(f => f.RegionId == 10000002);
         }
 
         private bool filterResults(object obj) {
@@ -93,19 +95,23 @@ namespace eZet.Eve.EveProfiteer.ViewModels {
                 return false;
             if (ProfitFilterCheckBox && item.DailyProfit < ProfitFilterValue)
                 return false;
-            if (!string.IsNullOrWhiteSpace(SearchFilter) && !item.ItemName.ToLower().Contains(SearchFilter.ToLower()))
-                return false;
-            return true;
-
+            return string.IsNullOrWhiteSpace(SearchFilter) || item.ItemName.ToLower().Contains(SearchFilter.ToLower());
         }
 
         public void AnalyzeAction(MarketAnalyzerViewModel vm) {
             var cts = new CancellationTokenSource();
             var progressVm = new AnalyzerProgressViewModel(cts);
             var progress = progressVm.GetProgressReporter();
-            Task.Factory.StartNew<MarketAnalyzer>(() => getResult(progress), cts.Token)
+            Task.Factory.StartNew(() => getResult(progress), cts.Token)
                 .ContinueWith(task => { MarketAnalyzerResults = new ListCollectionView(task.Result.Items.Values.ToList()); dialogService.CloseDialog(progressVm); }, cts.Token);
-            dialogService.ShowDialog(progressVm);
+            dialogService.ShowDialog(progressVm, new AnalyzerProgressView());
+        }
+
+        public void ScannerLinkAction(MarketAnalyzerViewModel vm) {
+            var list = MarketAnalyzerResults.Cast<MarketAnalyzerResult>().Where(result => result.IsChecked).Select(f => f.TypeId);
+            var uri = marketService.GetScannerLink(list.ToList());
+            var scannerVm = new ScannerLinkViewModel(uri);
+            dialogService.ShowDialog(scannerVm, new ScannerLinkView());
         }
 
         private MarketAnalyzer getResult(IProgress<ProgressType> progress) {

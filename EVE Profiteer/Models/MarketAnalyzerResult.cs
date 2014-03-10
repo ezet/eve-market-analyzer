@@ -1,23 +1,22 @@
-﻿using System.Windows.Media.Animation;
-using eZet.Eve.MarketDataApi.Dto.Xml;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using eZet.EveLib.EveMarketData.Model;
 
 namespace eZet.Eve.EveProfiteer.Models {
     public class MarketAnalyzerResult {
 
-        public List<XmlItemHistory> Data { get; private set; }
+        public List<ItemHistory.ItemHistoryEntry> Data { get; private set; }
 
         public MarketAnalyzerResult(Region region, Item item) {
             TypeId = item.TypeId;
             ItemName = item.TypeName;
             RegionId = region.RegionId;
             RegionName = region.RegionName;
-            Data = new List<XmlItemHistory>();
+            Data = new List<ItemHistory.ItemHistoryEntry>();
         }
+
+        public bool IsChecked { get; set; }
 
         public double TotalRating { get; private set; }
 
@@ -75,7 +74,6 @@ namespace eZet.Eve.EveProfiteer.Models {
 
             TotalRating = (volRating*VolumeWeight) * (marginRating*MarginWeight) * (profitRating*ProfitWeight) * TargetRating / (200 * 200 * 600);
         }
-
 
     }
 }

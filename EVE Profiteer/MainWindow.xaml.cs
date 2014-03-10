@@ -20,14 +20,6 @@ namespace eZet.Eve.EveProfiteer {
         private void SplitterNameDragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e) {
             MainGrid.ColumnDefinitions[0].Width = new GridLength(MainGrid.ColumnDefinitions[0].ActualWidth + e.HorizontalChange);
         }
-
-        private void MarketAnalyzerResult_Loaded(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void CollectionViewSource_Filter(object sender, System.Windows.Data.FilterEventArgs e) {
-
-        }
     }
 
 }

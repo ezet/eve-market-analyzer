@@ -3,9 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:models="clr-namespace:eZet.Eve.EveProfiteer.Models"
-        xmlns:vm="clr-namespace:eZet.Eve.EveProfiteer.ViewModels"
-        xmlns:views="clr-namespace:eZet.Eve.EveProfiteer.Views"
-        xmlns:cmd="clr-namespace:eZet.Eve.EveProfiteer.Commands"
         Title="Eve Profiteer" Height="588" Width="900">
 
     <DockPanel LastChildFill="True">
@@ -25,9 +22,9 @@
             <ToolBarTray DockPanel.Dock="Top">
                 <ToolBar>
                     <Button Content="Analyze" Command="{Binding AnalyzeCommand}" CommandParameter="{Binding}" Margin="10 0" Padding="5"/>
+                    <Button Content="IGB Link" Command="{Binding ScannerLinkCommand}" CommandParameter="{Binding}" Margin="10 0" Padding="5"/>
                     <Label>Region:</Label>
-                    <ComboBox Width="150" ItemsSource="{Binding Regions}" DisplayMemberPath="RegionName"
-                              SelectedValuePath="RegionId" SelectedItem="{Binding SelectedRegion}" SelectedValue="10000002">
+                    <ComboBox Width="150" ItemsSource="{Binding Regions}" DisplayMemberPath="RegionName" SelectedItem="{Binding SelectedRegion}">
                     </ComboBox>
                     <Label>Days:</Label>
                     <Slider Minimum="1" Maximum="20" Value="{Binding DayLimit}" Width="80" SmallChange="1" TickPlacement="TopLeft" LargeChange="5" TickFrequency="2"></Slider>
@@ -74,17 +71,23 @@
 
                 <GridSplitter Name="Splitter" Grid.Column="1" Margin="3" VerticalAlignment="Stretch" Width="5" ResizeBehavior="PreviousAndNext" Focusable="False" IsTabStop="False" Background="#FFD1DAEE"/>
                 <DockPanel LastChildFill="True" Grid.Column="2">
-                    <DataGrid ItemsSource="{Binding MarketAnalyzerResults}"  IsReadOnly="True" VirtualizingPanel.VirtualizationMode="Recycling" AutoGenerateColumns="False">
+                    <DataGrid ItemsSource="{Binding MarketAnalyzerResults}" VirtualizingPanel.VirtualizationMode="Recycling" AutoGenerateColumns="False" UseLayoutRounding="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding ItemName}"/>
-                            <!--<DataGridTextColumn Header="Region" Binding="{Binding RegionName}"/>-->
-                            <DataGridTextColumn Header="Profit Rating" Binding="{Binding TotalRating, StringFormat=N0}"/>
-                            <DataGridTextColumn Header="Volume"  Binding="{Binding AvgVolume, StringFormat=N0}"/>
-                            <DataGridTextColumn Header="Buy Price" Binding="{Binding AvgBuyPrice, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="Sell Price" Binding="{Binding AvgSellPrice, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="Profit per Item" Binding="{Binding ProfitPerItem, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="Daily Profit" Binding="{Binding DailyProfit, StringFormat=N2}"/>
-                            <DataGridTextColumn Header="Margin" Binding="{Binding Margin, StringFormat=P2}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn IsReadOnly="True" Header="Name" Binding="{Binding ItemName}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Profit Rating" Binding="{Binding TotalRating, StringFormat=N0}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Volume"  Binding="{Binding AvgVolume, StringFormat=N0}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Buy Price" Binding="{Binding AvgBuyPrice, StringFormat=N2}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Sell Price" Binding="{Binding AvgSellPrice, StringFormat=N2}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Profit per Item" Binding="{Binding ProfitPerItem, StringFormat=N2}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Daily Profit" Binding="{Binding DailyProfit, StringFormat=N2}"/>
+                            <DataGridTextColumn IsReadOnly="True" Header="Margin" Binding="{Binding Margin, StringFormat=P2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </DockPanel>

@@ -1,8 +1,0 @@
-﻿<Grid x:Class="eZet.Eve.EveProfiteer.Views.MarketAnalyzerView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:models="clr-namespace:eZet.Eve.EveProfiteer.Models"
-        xmlns:viewmodels="clr-namespace:eZet.Eve.EveProfiteer.ViewModels">
-
-
-</Grid>

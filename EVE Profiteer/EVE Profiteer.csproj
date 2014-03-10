@@ -111,7 +111,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AnalyzeCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Entities\ProgressType.cs" />
     <Compile Include="Models\Extensions\Item.cs" />
@@ -126,15 +125,16 @@
     </Compile>
     <Compile Include="Services\EveDbService.cs" />
     <Compile Include="Services\EveMarketDataService.cs" />
-    <Compile Include="Services\OpenDialogService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModels\AnalyzerProgressViewModel.cs" />
+    <Compile Include="ViewModels\ScannerLinkViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\AnalyzerProgressView.xaml.cs">
       <DependentUpon>AnalyzerProgressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MarketAnalyzerViewModel.cs" />
-    <Compile Include="Views\MarketAnalyzerView.xaml.cs">
-      <DependentUpon>MarketAnalyzerView.xaml</DependentUpon>
+    <Compile Include="Views\ScannerLinkView.xaml.cs">
+      <DependentUpon>ScannerLinkView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -166,7 +166,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MarketAnalyzerView.xaml">
+    <Page Include="Views\ScannerLinkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,7 +201,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EveDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="EVE Profiteer_TemporaryKey.pfx" />
     <None Include="Models\EveDbModel.edmx.diagram">
       <DependentUpon>EveDbModel.edmx</DependentUpon>
     </None>
@@ -234,12 +233,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\EVE MarketData Api\EVE MarketData Api\EVE MarketData Api.csproj">
-      <Project>{04114d09-28bd-4f16-8368-64cdb21d916b}</Project>
-      <Name>EVE MarketData Api</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
@@ -256,7 +249,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\EVE Library\EveMarketData Api\EveMarketData Api.csproj">
+      <Project>{185e2271-bba1-4071-ac46-bf47153bdb7a}</Project>
+      <Name>EveMarketData Api</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

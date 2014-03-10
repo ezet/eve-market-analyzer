@@ -1,10 +1,6 @@
 ﻿using eZet.Eve.EveProfiteer.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace eZet.Eve.EveProfiteer.ViewModels {
     public class AnalyzerProgressViewModel : ViewModel {
